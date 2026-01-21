@@ -124,10 +124,10 @@ EOF
       curl -fsSL "https://github.com/tensorchord/vectorchord/releases/download/${VCHORD_RELEASE}/postgresql-16-vchord_${VCHORD_RELEASE}-1_amd64.deb" -o vchord.deb
       $STD apt install -y ./vchord.deb
       systemctl restart postgresql
-      $STD su -u postgres psql -d immich -c "ALTER EXTENSION vector UPDATE;"
-      $STD su -u postgres psql -d immich -c "ALTER EXTENSION vchord UPDATE;"
-      $STD su -u postgres psql -d immich -c "REINDEX INDEX face_index;"
-      $STD su -u postgres psql -d immich -c "REINDEX INDEX clip_index;"
+      $STD su - postgres -c psql -d immich -c "ALTER EXTENSION vector UPDATE;"
+      $STD su - postgres -c psql -d immich -c "ALTER EXTENSION vchord UPDATE;"
+      $STD su - postgres -c psql -d immich -c "REINDEX INDEX face_index;"
+      $STD su - postgres -c psql -d immich -c "REINDEX INDEX clip_index;"
       echo "$VCHORD_RELEASE" >~/.vchord_version
       rm ./vchord.deb
       msg_ok "Upgraded VectorChord to v${VCHORD_RELEASE}"
